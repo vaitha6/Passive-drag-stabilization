@@ -18,40 +18,35 @@ The intensity of drag is determined from the NRLMSIS-00 model using a Python int
 
 To reduce the computational effort, a lower number of particles are simulated to collide with the satellite, with the total mass colliding being identical. 
 
-## Simulation setup
+## Equations Used in the Simulation
 
-The attitude of the satellite is calculated at discrete timesteps based on the following equations:
+### 1. Lever Arm (\(\mathbf{r}\))
+The **lever arm** is the vector from the **center of mass (COM)** of the satellite to the **collision point** where the particle strikes:  
+\[
+\mathbf{r} = \text{collision\_point} - \text{COM}
+\]
 
-1. **Lever Arm (r):**  
-   The lever arm is the vector from the center of mass (\(\text{COM}\)) to the collision point:  
-   \[
-   \mathbf{r} = \text{collision\_point} - \text{COM}
-   \]
+### 2. Satellite Velocity at the Collision Point (\(\mathbf{v}_{\text{satellite}}\))
+The velocity of the **satellite surface** at the collision point is calculated using the **cross product** of the **angular velocity** (\(\boldsymbol{\omega}\)) and the **lever arm** (\(\mathbf{r}\)):  
+\[
+\mathbf{v}_{\text{satellite}} = \boldsymbol{\omega} \times \mathbf{r}
+\]
 
-2. **Satellite Velocity at Collision Point (\(\mathbf{v}_{\text{satellite}}\)):**  
-   The velocity of the satellite at the collision point is obtained using the cross product of the angular velocity (\(\boldsymbol{\omega}\)) and the lever arm (\(\mathbf{r}\)):  
-   \[
-   \mathbf{v}_{\text{satellite}} = \boldsymbol{\omega} \times \mathbf{r}
-   \]
+### 3. Relative Velocity (\(\mathbf{v}_{\text{rel}}\))
+The velocity of incoming particles is given as \(\mathbf{v}_{\text{particle}}\). The **relative velocity** between the **satellite surface** and the **incoming particles** is:  
+\[
+\mathbf{v}_{\text{rel}} = \mathbf{v}_{\text{satellite}} - \mathbf{v}_{\text{particle}}
+\]
 
-3. **Relative Velocity (\(\mathbf{v}_{\text{rel}}\)):**  
-   The velocity of the particles is given as \(\mathbf{v}_{\text{particle}}\). The relative velocity between the satellite surface and the incoming particles is:  
-   \[
-   \mathbf{v}_{\text{rel}} = \mathbf{v}_{\text{satellite}} - \mathbf{v}_{\text{particle}}
-   \]
+### 4. Force Exerted by a Particle (\(\mathbf{F}\))
+Assuming an **impulse-based approach**, where the force acts over a **timestep** (\(\Delta t\)), the **force exerted** by a **single particle** is given by:  
+\[
+\mathbf{F} = \frac{m_p \mathbf{v}_{\text{rel}}}{\Delta t}
+\]
+where \(m_p\) is the **mass of an individual particle**.
 
-4. **Force (\(\mathbf{F}\)):**  
-   Assuming an impulse-based approach where the force acts over a timestep \(\Delta t\), the force exerted by a single particle is:  
-   \[
-   \mathbf{F} = \frac{m_p \mathbf{v}_{\text{rel}}}{\Delta t}
-   \]
-   where \(m_p\) is the mass of an individual particle.
-
-5. **Torque (\(\boldsymbol{\tau}\)):**  
-   The torque exerted by a particle due to impact is given by:  
-   \[
-   \boldsymbol{\tau} = \mathbf{r} \times \mathbf{F}
-   \]
-
-
-
+### 5. Torque Due to Collision (\(\boldsymbol{\tau}\))
+The **torque** exerted by a **particle impact** on the satellite is given by the **cross product** of the **lever arm** (\(\mathbf{r}\)) and the **force** (\(\mathbf{F}\)):  
+\[
+\boldsymbol{\tau} = \mathbf{r} \times \mathbf{F}
+\]
