@@ -4,7 +4,7 @@ This repository contains code to simulate the attitude dynamics of a satellite i
 
 ## Satellite properties
 
-class "satellite" stores satellite objects with parameters including dimensions along the X, Y and Z-axis, the position of the centre of mass, the initial angular velocity vector and the inertia tensor matrix. The current code consists of a simulation attempted for the Delfi n3xt satellite with its parameters taken from [link text]((https://www.eucass.eu/component/docindexer/?task=download&id=4465))
+class "satellite" stores satellite objects with parameters including dimensions along the X, Y and Z-axis, the position of the centre of mass, the initial angular velocity vector and the inertia tensor matrix. The current code consists of a simulation attempted for the Delfi n3xt satellite with its parameters taken from [www.eucass.eu](https://www.eucass.eu/component/docindexer/?task=download&id=4465)
 
 ## Drag force
 
@@ -14,39 +14,41 @@ The drag experienced in LEO is simulated in the form of particle collisions with
 - The collision takes place with only the satellite's faces directed towards the particles.
 - Particles collide uniformly over a given face determined by a probability distribution function.
 
-The intensity of drag is determined from the NRLMSIS-00 model using a Python interface [link text](https://pypi.org/project/nrlmsise00/). Based on a given epoch and physical co-ordinates (latitude, longitude and altitude), the model provides the particle number density for each species of gas present. 
+The intensity of drag is determined from the NRLMSIS-00 model using a Python interface [pypi.org](https://pypi.org/project/nrlmsise00/). Based on a given epoch and physical co-ordinates (latitude, longitude and altitude), the model provides the particle number density for each species of gas present. 
 
 To reduce the computational effort, a lower number of particles are simulated to collide with the satellite, with the total mass colliding being identical. 
 
-## Equations Used in the Simulation
+To check if a particle collides with a given satellite surface, the dot product of the area vector with the particle velocity vector is calculated as a criterion.
 
-### 1. Lever Arm (\(\mathbf{r}\))
-The **lever arm** is the vector from the **center of mass (COM)** of the satellite to the **collision point** where the particle strikes:  
-\[
-\mathbf{r} = \text{collision\_point} - \text{COM}
-\]
+The collision points are randomly distributed over a surface using the random.uniform() function. The torque produced by each particle is calculated as a cross product of the position vector with respect to the centre of mass of the satellite and the collision force vector. The cumulative torque provides the change in angular velocity which is added at each timestep.
 
-### 2. Satellite Velocity at the Collision Point (\(\mathbf{v}_{\text{satellite}}\))
-The velocity of the **satellite surface** at the collision point is calculated using the **cross product** of the **angular velocity** (\(\boldsymbol{\omega}\)) and the **lever arm** (\(\mathbf{r}\)):  
-\[
-\mathbf{v}_{\text{satellite}} = \boldsymbol{\omega} \times \mathbf{r}
-\]
+## Sample simulation
 
-### 3. Relative Velocity (\(\mathbf{v}_{\text{rel}}\))
-The velocity of incoming particles is given as \(\mathbf{v}_{\text{particle}}\). The **relative velocity** between the **satellite surface** and the **incoming particles** is:  
-\[
-\mathbf{v}_{\text{rel}} = \mathbf{v}_{\text{satellite}} - \mathbf{v}_{\text{particle}}
-\]
+## Density model
 
-### 4. Force Exerted by a Particle (\(\mathbf{F}\))
-Assuming an **impulse-based approach**, where the force acts over a **timestep** (\(\Delta t\)), the **force exerted** by a **single particle** is given by:  
-\[
-\mathbf{F} = \frac{m_p \mathbf{v}_{\text{rel}}}{\Delta t}
-\]
-where \(m_p\) is the **mass of an individual particle**.
+| Parameter                     | Value                                  | Unit        |
+|--------------------------------|----------------------------------------|------------|
+| **Density Model Used**         | MSISE00 Atmosphere Model               | —          |
+| **Density Calculation Date**   | December 1, 2013, 08:03:20 UTC         | —          |
+| **Altitude**                   | 600                                    | km         |
+| **Latitude**                   | 75                                     | degrees    |
+| **Longitude**                  | -70                                    | degrees    |
+| **Solar Activity Index (F10.7A, F10.7B)** | (150, 150)                 | sfu        |
+| **Geomagnetic Activity Index (AP)** | 4                               | —          |
+| **Local Solar Time**           | 16                                     | hours      |
 
-### 5. Torque Due to Collision (\(\boldsymbol{\tau}\))
-The **torque** exerted by a **particle impact** on the satellite is given by the **cross product** of the **lever arm** (\(\mathbf{r}\)) and the **force** (\(\mathbf{F}\)):  
-\[
-\boldsymbol{\tau} = \mathbf{r} \times \mathbf{F}
-\]
+## Simulation parameters
+
+| Parameter                     | Value                                  | Unit        |
+|--------------------------------|----------------------------------------|------------|
+| **Actual Mass per Particle**   | 1e-23                                  | kg         |
+| **Simulated Particle Mass**    | 1e-11                                  | kg         |
+| **Actual number of particles**   | ~ 3.106e+15                                 |          |
+| **Simulated number of particles**    | 3100                                  |          |
+| **Particle Velocity**          | (5000, 0, 0)                           | m/s        |
+| **Timestep**                   | 0.1                                    | seconds    |
+| **Total Simulation Time**      | 100                                    | seconds    |
+
+## Results
+
+![image](AngularVA_vs_time_updated.png)
