@@ -24,6 +24,19 @@ The collision points are randomly distributed over a surface using the random.un
 
 ## Sample simulation
 
+## Delfi-n3Xt Satellite Parameters
+
+| Parameter                      | Value                                     | Unit        |
+|--------------------------------|-------------------------------------------|------------|
+| **Length**                     | 0.1                                       | meters     |
+| **Width**                      | 0.1                                       | meters     |
+| **Height**                     | 0.3                                       | meters     |
+| **Center of Mass (CoM)**        | (0.05, 0.05, 0.1)                         | meters     |
+| **Initial Angular Velocity**    | (15, 9, 4)                                | degrees/s      |
+| **Moment of Inertia (Ixx)**     | 0.03699                                   | kg·m²      |
+| **Moment of Inertia (Iyy)**     | 0.03701                                   | kg·m²      |
+| **Moment of Inertia (Izz)**     | 0.005                                     | kg·m²      |
+
 ## Density model
 
 | Parameter                     | Value                                  | Unit        |
