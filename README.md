@@ -1,6 +1,6 @@
 # Attitude dynamics of satellites in the presence of drag in Low Earth Orbit
 
-This repository contains code to simulate the attitude dynamics of a satellite in Low Earth Orbit (LEO) based on a Monte Carlo analysis. The goal is to identify the most stable configuration/ geometry of the satellite such that the drag can be used to passively stabilise the satellite. The current code models only the rotation of the satellite and not its translational movement, i.e., orbital velocity and altitude are considered a constant. (This is only temporary)
+This repository contains code (refer to [main.py](main.py)) to simulate the attitude dynamics of a satellite in Low Earth Orbit (LEO) based on a discrete collision-based method. The goal is to identify the most stable configuration/ geometry of the satellite such that the drag can be used to passively stabilise it. The current code models only the rotation of the satellite and not its translational movement, i.e., orbital velocity and altitude are considered a constant. (This is only temporary)
 
 ## Satellite properties
 
