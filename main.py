@@ -204,3 +204,48 @@ for step in range(total_steps):
         print(f"  Angles: {angles}")
         print(f"  Particle Counts: {collisions_per_face}")
         print("-" * 40)
+
+
+#------- PLOTTING -------#
+
+# Convert lists to NumPy arrays for easier slicing
+angular_velocity_history = np.array(angular_velocity_history)
+angular_acceleration_history = np.array(angular_acceleration_history)
+
+# Visualization of particle collisions
+timesteps = np.linspace(1, total_steps + 1, total_steps)
+plt.figure(figsize=(12, 6))
+for face, counts in particle_counts.items():
+    plt.plot(timesteps*timestep, counts, label=f"Face {face}")
+
+plt.title("Number of Particles Colliding with Each Surface per Timestep")
+plt.xlabel("Time (in s)")
+plt.ylabel("Number of Particles")
+plt.legend()
+plt.grid()
+plt.show()
+
+fig, axes = plt.subplots(2, 1, figsize=(10, 8))
+
+# Plot angular velocity
+axes[0].plot(timesteps*timestep, angular_velocity_history[:, 0], label='About X-axis (rad/s)')
+axes[0].plot(timesteps*timestep, angular_velocity_history[:, 1], label='About Y-axis (rad/s)')
+axes[0].plot(timesteps*timestep, angular_velocity_history[:, 2], label='About Z-axis (rad/s)')
+axes[0].set_title('Angular Velocity Over Time')
+axes[0].set_xlabel('Time (s)')
+axes[0].set_ylabel('Angular Velocity (rad/s)')
+axes[0].legend()
+axes[0].grid(True)
+
+# Plot angular acceleration
+axes[1].plot(timesteps*timestep, angular_acceleration_history[:, 0], label='About X-axis (rad/s²)')
+axes[1].plot(timesteps*timestep, angular_acceleration_history[:, 1], label='About Y-axis (rad/s²)')
+axes[1].plot(timesteps*timestep, angular_acceleration_history[:, 2], label='About Z-axis (rad/s²)')
+axes[1].set_title('Angular Acceleration Over Time')
+axes[1].set_xlabel('Time (s)')
+axes[1].set_ylabel('Angular Acceleration (rad/s²)')
+axes[1].legend()
+axes[1].grid(True)
+
+plt.tight_layout()
+plt.show()
