@@ -64,4 +64,4 @@ The collision points are randomly distributed over a surface using the random.un
 
 ## Results
 
-![image](AngularVA_vs_time_updated.png)
+![image](AngularVnA_vs_time_updated.png)
