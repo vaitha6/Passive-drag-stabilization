@@ -2,7 +2,7 @@
 
 This repository contains code (refer to [main.py](main.py)) to simulate the attitude dynamics of a satellite in Low Earth Orbit (LEO) based on a discrete collision-based method. The goal is to identify the most stable configuration/ geometry of the satellite such that the drag can be used to passively stabilise it. The current code models only the rotation of the satellite and not its translational movement, i.e., orbital velocity and altitude are considered constant. (This is only temporary)
 
-## UPDATE
+__UPDATE: (28/08/2025)__
 
 The uploaded files __init__.py, helpers.py, and solver.py are parts of the original code that have been restructured to allow for better code reusability.
 
