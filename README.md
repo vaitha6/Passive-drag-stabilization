@@ -6,8 +6,11 @@ This repository contains code (refer to [main.py](main.py)) to simulate the atti
 
 The uploaded files __init__.py, helpers.py, and solver.py are parts of the original code that have been restructured to allow for better code reusability.
 
+
 __init__.py: Satellite, setup properties
+
 helpers.py: Computation of density model, collision points and rotation matrix
+
 solver.py: Computes angular velocity, acceleration and particle collisions for given time steps and exports into .csv files for post-processing.
 
 ## Satellite properties
